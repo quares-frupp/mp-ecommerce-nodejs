@@ -7,7 +7,7 @@ var port = process.env.PORT || 3000
 
 var app = express();
 
-const BASE_URL = 'https://frupp-mp-commerce-nodejs.herokuapp.com/';
+const BASE_URL = 'http://frupp-mp-commerce-nodejs.herokuapp.com/';
 
 const testBuyer = {
     id: 471923173,
