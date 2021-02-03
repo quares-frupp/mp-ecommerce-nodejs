@@ -161,7 +161,7 @@ app.post('/notifications', (req, res) => {
 
     if(!index || !message){
         const errorFile = require('./errors.json');
-        errorFile.errors.push(req.body);
+        errorFile.errors.push([req.body, dataToSave]);
         fs.writeFileSync('./errors.json', JSON.stringify(errorFile));
     } else {
         message.responses.push([req.body, dataToSave]);
