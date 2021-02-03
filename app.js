@@ -129,48 +129,11 @@ app.get('/logs', (req, res) => {
     res.send(jsonFile);
 });
 
-app.get('/errors', (req, res) => {
-    const jsonFile = require('./errors.json');
-    res.send(jsonFile);
-});
 
 app.post('/notifications', (req, res) => {
     const jsonFile = require('./logs.json');
 
-    const notificationType = req.body.type;
-    const id = req.body.data.id;
-
-    let searchObject;
-    switch(notificationType){
-        case 'payment':
-            searchObject = mercadopago.payment;
-            break;
-        case 'plan':
-            searchObject = mercadopago.plan;
-            break;
-        case 'subscription':
-            searchObject = mercadopago.subscription;
-            break;
-        case 'invoice':
-            searchObject = mercadopago.subscription;
-            break;
-        default:
-            throw new Error();
-    }
-
-     const dataToSave = searchObject.findById(id);
-
-    const message = jsonFile.messages.find(obj => obj.preference_id == id );
-    const index = jsonFile.messages.indexOf(message);
-
-    if(!index || !message){
-        const errorFile = require('./errors.json');
-        errorFile.errors.push([req.body, dataToSave]);
-        fs.writeFileSync('./errors.json', JSON.stringify(errorFile));
-    } else {
-        message.responses.push([req.body, dataToSave]);
-        jsonFile.messages[index] = message;
-    }
+    jsonFile.messages.push(req.body);
 
     fs.writeFileSync('./logs.json', JSON.stringify(jsonFile));
 
