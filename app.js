@@ -96,7 +96,7 @@ app.post('/checkout', (req, res) => {
        const jsonFile = require('./logs.json');
 
        jsonFile.messages.push({
-           preference_id: req.body.id,
+           preference_id: response.body.id,
            responses: []
        });
 
