@@ -84,7 +84,13 @@
                                     {{ unit }}
                                 </h3>
                             </div>
-                            <button type="submit" class="mercadopago-button" formmethod="post">Pagar</button>
+                            <form action="/checkout" method="post">
+                                <input type="hidden" name="img" value="{{ img }}">
+                                <input type="hidden" name="title" value="{{ title }}">
+                                <input type="hidden" name="price" value="{{ price }}">
+                                <input type="hidden" name="unit" value="{{ unit }}">
+                                <button type="submit" class="mercadopago-button" formmethod="post">Pagar la compra</button>
+                            </form>
                         </div>
                     </div>
                 </div>
