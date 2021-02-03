@@ -108,6 +108,10 @@ app.post('/checkout', (req, res) => {
 
 });
 
+app.get('/success', (req, res) => {
+    res.render('success', req.query);
+});
+
 app.post('/success', (req, res) => {
     res.render('success', req.query);
 });
