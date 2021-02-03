@@ -97,6 +97,7 @@ app.post('/checkout', (req, res) => {
 
        jsonFile.messages.push({
            preference_id: response.body.id,
+           preference: response,
            responses: []
        });
 
