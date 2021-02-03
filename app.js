@@ -124,6 +124,11 @@ app.get('/logs', (req, res) => {
     res.send(jsonFile);
 });
 
+app.get('/errors', (req, res) => {
+    const jsonFile = require('./errors.json');
+    res.send(jsonFile);
+});
+
 app.post('/notifications', (req, res) => {
     const jsonFile = require('./logs.json');
 
