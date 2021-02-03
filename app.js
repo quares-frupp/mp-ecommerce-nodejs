@@ -92,6 +92,16 @@ app.post('/checkout', (req, res) => {
 
    mercadopago.preferences.create(preference).then(response => {
        console.log(response);
+
+       const jsonFile = require('./logs.json');
+
+       jsonFile.messages.push({
+           preference_id: req.body.id,
+           responses: []
+       });
+
+       fs.writeFileSync('./logs.json', JSON.stringify(jsonFile));
+
        res.redirect(response.body.init_point);
    }).catch(err => res.render('home'));
 
@@ -117,7 +127,34 @@ app.get('/logs', (req, res) => {
 app.post('/notifications', (req, res) => {
     const jsonFile = require('./logs.json');
 
-    jsonFile.messages.push(req.body);
+    const notificationType = req.body.type;
+    const id = req.body.data.id;
+
+    let searchObject;
+    switch(notificationType){
+        case 'payment':
+            searchObject = mercadopago.payment;
+            break;
+        case 'plan':
+            searchObject = mercadopago.plan;
+            break;
+        case 'subscription':
+            searchObject = mercadopago.subscription;
+            break;
+        case 'invoice':
+            searchObject = mercadopago.subscription;
+            break;
+        default:
+            throw new Error();
+    }
+
+     const dataToSave = searchObject.findById(id);
+
+    const message = jsonFile.messages.find(obj => obj.preference_id == id );
+    const index = jsonFile.messages.indexOf(message);
+
+    message.responses.push(req.body);
+    jsonFile.messages[index] = message;
 
     fs.writeFileSync('./logs.json', JSON.stringify(jsonFile));
 
