@@ -153,8 +153,14 @@ app.post('/notifications', (req, res) => {
     const message = jsonFile.messages.find(obj => obj.preference_id == id );
     const index = jsonFile.messages.indexOf(message);
 
-    message.responses.push(req.body);
-    jsonFile.messages[index] = message;
+    if(!index || !message){
+        const errorFile = require('./errors.json');
+        errorFile.errors.push(req.body);
+        fs.writeFileSync('./errors.json', JSON.stringify(errorFile));
+    } else {
+        message.responses.push([req.body, dataToSave]);
+        jsonFile.messages[index] = message;
+    }
 
     fs.writeFileSync('./logs.json', JSON.stringify(jsonFile));
 
