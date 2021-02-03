@@ -109,7 +109,7 @@ app.post('/checkout', (req, res) => {
 });
 
 app.post('/success', (req, res) => {
-    res.sendStatus(200);
+    res.render('success', req.query);
 });
 
 app.post('/pending', (req, res) => {
