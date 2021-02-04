@@ -55,11 +55,12 @@ app.post('/checkout', (req, res) => {
                description: "Dispositivo móvil de Tienda e-commerce",
                unit_price: Number.parseFloat(price),
                quantity: Number.parseInt(unit),
-               picture_url: img
+               picture_url: path.join(BASE_URL + img)
            }
        ],
        payer: {
-           name: 'Lalo Landa',
+           name: 'Lalo',
+           surname: 'Landa',
            email: testBuyer.email,
            phone: {
                area_code: "11",
