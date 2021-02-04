@@ -139,9 +139,9 @@ app.get('/notifications', (req, res) => {
 app.post('/notifications', (req, res) => {
     const jsonFile = require('./notifications.json');
 
-    jsonFile.messages.push(res.body);
+    jsonFile.messages.push(req.body);
 
-    fs.writeFileSync('./preferences.json', JSON.stringify(jsonFile));
+    fs.writeFileSync('./notifications.json', JSON.stringify(jsonFile));
 
     res.sendStatus(200);
 });
