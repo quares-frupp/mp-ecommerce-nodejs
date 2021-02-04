@@ -93,15 +93,14 @@ app.post('/checkout', (req, res) => {
    mercadopago.preferences.create(preference).then(response => {
        console.log(response);
 
-       const jsonFile = require('./logs.json');
+       const jsonFile = require('./preferences.json');
 
        jsonFile.messages.push({
            preference_id: response.body.id,
            preference: response,
-           responses: []
        });
 
-       fs.writeFileSync('./logs.json', JSON.stringify(jsonFile));
+       fs.writeFileSync('./preferences.json', JSON.stringify(jsonFile));
 
        res.redirect(response.body.init_point);
    }).catch(err => res.render('home'));
@@ -124,18 +123,23 @@ app.post('/failure', (req, res) => {
     res.sendStatus(200);
 });
 
-app.get('/logs', (req, res) => {
-    const jsonFile = require('./logs.json');
+app.get('/preferences', (req, res) => {
+    const jsonFile = require('./preferences.json');
+    res.send(jsonFile);
+});
+
+app.get('/notifications', (req, res) => {
+    const jsonFile = require('./notifications.json');
     res.send(jsonFile);
 });
 
 
 app.post('/notifications', (req, res) => {
-    const jsonFile = require('./logs.json');
+    const jsonFile = require('./notifications.json');
 
-    jsonFile.messages.push(req.body);
+    jsonFile.messages.push(res.body);
 
-    fs.writeFileSync('./logs.json', JSON.stringify(jsonFile));
+    fs.writeFileSync('./preferences.json', JSON.stringify(jsonFile));
 
     res.sendStatus(200);
 });
