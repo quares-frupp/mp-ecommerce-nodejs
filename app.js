@@ -3,6 +3,7 @@ var exphbs  = require('express-handlebars');
 const mercadopago = require('mercadopago');
 const bodyParser = require('body-parser');
 const fs = require('fs')
+const path = require('path');
 var port = process.env.PORT || 3000
 
 var app = express();
